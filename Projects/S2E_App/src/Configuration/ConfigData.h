@@ -112,7 +112,6 @@ typedef struct __DevConfig {
 	struct __user_io_info user_io_info;		// Enable / Type / Direction
 	struct __firmware_update firmware_update;					// ## Eric, Field added for compatibility with WIZ107SR
 	struct __firmware_update_extend firmware_update_extend;		// ## Eric, Field added for Extended function: Firmware update by HTTP (Remote) Server
-	uint8_t modbus_enable;
 } __attribute__((packed)) DevConfig;
 
 DevConfig* get_DevConfig_pointer(void);

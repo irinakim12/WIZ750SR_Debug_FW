@@ -10,16 +10,6 @@
 #include "dhcp.h"
 #include "dns.h"
 
-static volatile uint16_t msec_cnt = 0;
-static volatile uint8_t  sec_cnt = 0;
-static volatile uint8_t  min_cnt = 0;
-static volatile uint8_t  hour_cnt = 0;
-static volatile uint16_t day_cnt = 0;
-static volatile uint32_t devtime_sec = 0;
-static volatile uint32_t devtime_msec = 0;
-
-static uint8_t enable_phylink_check = 1;
-static volatile uint32_t phylink_down_time_msec;
 
 void Timer_Configuration(void)
 {

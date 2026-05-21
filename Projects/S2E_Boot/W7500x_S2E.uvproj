@@ -10,8 +10,7 @@
       <TargetName>W7500x_S2E_Boot</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARMCC</pArmCC>
-      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -379,7 +378,7 @@
               <MiscControls>--feedback=unused.txt</MiscControls>
               <Define>CORTEX_M0 USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS\Device\WIZnet\W7500\Include;..\..\Libraries\W7500x_stdPeriph_Driver\inc;..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\WIZnet\W7500\Source\ARM;..\S2E_App\src;..\S2E_App\src\Configuration;.\src;..\..\ioLibrary\Ethernet;..\..\ioLibrary\Internet\DHCP;..\..\ioLibrary\Internet\DNS;..\..\ioLibrary\MDIO;..\..\ioLibrary\Application\loopback;.\src\Configuration;.\src\PlatformHandler;.\src\Serial_to_Ethernet;.\src\Callback;..\S2E_App\src\Modbus</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS\Device\WIZnet\W7500\Include;..\..\Libraries\W7500x_stdPeriph_Driver\inc;..\..\Libraries\CMSIS\Include;..\..\Libraries\CMSIS\Device\WIZnet\W7500\Source\ARM;..\S2E_App\src;..\S2E_App\src\Configuration;.\src;..\..\ioLibrary\Ethernet;..\..\ioLibrary\Internet\DHCP;..\..\ioLibrary\Internet\DNS;..\..\ioLibrary\MDIO;..\..\ioLibrary\Application\loopback;.\src\Configuration;.\src\PlatformHandler;.\src\Serial_to_Ethernet;.\src\Callback</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -609,5 +608,20 @@
       </Groups>
     </Target>
   </Targets>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>&lt;Project Info&gt;</LayName>
+        <LayDesc></LayDesc>
+        <LayUrl></LayUrl>
+        <LayKeys></LayKeys>
+        <LayCat></LayCat>
+        <LayLic></LayLic>
+        <LayTarg>0</LayTarg>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

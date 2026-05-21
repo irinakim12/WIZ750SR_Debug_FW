@@ -144,7 +144,7 @@ int main(void)
 	
 	/* W7500x MCU Initialization */
 	W7500x_Init(); // includes UART2 init code for debugging
-
+	
 	/* W7500x WZTOE (Hardwired TCP/IP stack) Initialization */
 	W7500x_WZTOE_Init();
 	
@@ -174,6 +174,7 @@ int main(void)
 	{
 		// Copy_Interrupt_VectorTable(DEVICE_APP_MAIN_ADDR);
 		// delay(SAVE_INTERVAL_MS/2);
+
 		appjump_enable = ON;
 	}
 	
@@ -234,7 +235,7 @@ int main(void)
 		else if(get_boot_entry_pin() == 0) appjump_enable = OFF;
 #endif
 	}
-
+	
 	if(appjump_enable == ON)
 	{
 		application_jump(DEVICE_APP_MAIN_ADDR);
@@ -588,14 +589,4 @@ void delay(__IO uint32_t milliseconds)
 	
 	nCount=(GetSystemClock()/10000)*milliseconds;
 	for (; nCount!=0; nCount--);
-}
-
-void mdio_delay(__IO uint32_t count) 
-{ 
-	volatile uint32_t i; 
-	
-	for (i = 0; i < count * 260; i++) 
-	{ 
-		__asm volatile ("nop"); 
-	} 
 }

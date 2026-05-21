@@ -17,7 +17,7 @@
 
 	uint8_t        USER_IO_SEL[USER_IOn] =     {USER_IO_A, USER_IO_B, USER_IO_C, USER_IO_D};
 	const char*    USER_IO_STR[USER_IOn] =     {"a", "b", "c", "d"};
-	#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L)
+	#if (DEVICE_BOARD_NAME == WIZ750SR_1xx)
 		const char*    USER_IO_PIN_STR[USER_IOn] = {"PC15\0", "PC14\0", "PC13\0", "PC12\0"}; // WIZ750SR_1xx
 	#else
 		const char*    USER_IO_PIN_STR[USER_IOn] = {"PC28\0", "PC27\0", "PC26\0", "PC25\0",}; // W(IZ750SR
@@ -375,7 +375,7 @@ void init_connection_status_io(void)
 	if(serial->dsr_en == 0)	init_tcpconnection_status_pin();
 	else					init_flowcontrol_dsr_pin();
 
-#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L)
+#if (DEVICE_BOARD_NAME == WIZ750SR_1xx)
     #ifdef __USE_TCPCONNECT_STATUS_PIN__
         // TCP connection status pin for WIZ750SR-10x series only
         init_status_pin();
@@ -407,7 +407,7 @@ void set_connection_status_io(uint16_t pin, uint8_t set)
 		if(set == ON)
 		{
 			if(serial->dsr_en == 0) GPIO_ResetBits(STATUS_TCPCONNECT_PORT, STATUS_TCPCONNECT_PIN);
-#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L)
+#if (DEVICE_BOARD_NAME == WIZ750SR_1xx)
     #ifdef __USE_TCPCONNECT_STATUS_PIN__
             GPIO_ResetBits(STATUS_PORT, STATUS_PIN);
     #endif
@@ -418,7 +418,7 @@ void set_connection_status_io(uint16_t pin, uint8_t set)
 		{
 			
 			if(serial->dsr_en == 0) GPIO_SetBits(STATUS_TCPCONNECT_PORT, STATUS_TCPCONNECT_PIN);
-#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L)
+#if (DEVICE_BOARD_NAME == WIZ750SR_1xx)
     #ifdef __USE_TCPCONNECT_STATUS_PIN__
             GPIO_SetBits(STATUS_PORT, STATUS_PIN);
     #endif
@@ -469,7 +469,7 @@ void init_tcpconnection_status_pin(void)
 	// Pin initial state; High
 	GPIO_SetBits(STATUS_TCPCONNECT_PORT, STATUS_TCPCONNECT_PIN); 
 
-#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L)
+#if (DEVICE_BOARD_NAME == WIZ750SR_1xx)
     #ifdef __USE_TCPCONNECT_STATUS_PIN__
         GPIO_Configuration(STATUS_PORT, STATUS_PIN, GPIO_Mode_OUT, STATUS_PAD_AF);
         GPIO_SetBits(STATUS_PORT, STATUS_PIN);
@@ -477,7 +477,7 @@ void init_tcpconnection_status_pin(void)
 #endif
 }
 
-#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L)
+#if (DEVICE_BOARD_NAME == WIZ750SR_1xx)
 // TCP connection status pin for WIZ750SR-10x series only
 void init_status_pin(void)
 {
@@ -525,7 +525,7 @@ void check_phylink_status(void)
 	static uint8_t prev_link_status = 1;
 	uint8_t link_status;
 	
-#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) || (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L))
+#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) || (DEVICE_BOARD_NAME == WIZ750SR_1xx))
 	link_status = get_phylink_in_pin();
 #else
 	link_status = 0;

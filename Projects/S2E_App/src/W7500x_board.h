@@ -17,10 +17,9 @@
 /* Target Board Selector */
 //#define DEVICE_BOARD_NAME	WIZwiki_W7500ECO
 //#define DEVICE_BOARD_NAME	W7500P_S2E
-#define DEVICE_BOARD_NAME	WIZ750SR
-//#define DEVICE_BOARD_NAME	WIZ750SR_1xx
+//#define DEVICE_BOARD_NAME	WIZ750SR
+#define DEVICE_BOARD_NAME	WIZ750SR_1xx
 //#define DEVICE_BOARD_NAME	W7500_S2E
-//#define DEVICE_BOARD_NAME	WIZ750SR_T1L
 
 #ifdef DEVICE_BOARD_NAME
 	#if (DEVICE_BOARD_NAME == WIZ750SR)
@@ -52,7 +51,7 @@
 		#define DEVICE_PLL_SOURCE_CLOCK      PLL_SOURCE_12MHz
 		#define DEVICE_TARGET_SYSTEM_CLOCK   SYSTEM_CLOCK_48MHz
 		#define DEVICE_ID_DEFAULT            "W7500P-S2E"
-	#elif (DEVICE_BOARD_NAME == WIZ750SR_1xx) 
+	#elif (DEVICE_BOARD_NAME == WIZ750SR_1xx)
 		//#define __USE_UART_IF_SELECTOR__	// RS-232/TTL or RS-422/485 selector using UART IF selector pin
 		//#define __USE_EXT_EEPROM__			// External EEPROM or Internal Data flash (DAT0/1)
 		#define __USE_BOOT_ENTRY__			// Application boot mode entry pin activated
@@ -67,21 +66,6 @@
 		#define DEVICE_PLL_SOURCE_CLOCK      PLL_SOURCE_12MHz
 		#define DEVICE_TARGET_SYSTEM_CLOCK   SYSTEM_CLOCK_48MHz
 		#define DEVICE_ID_DEFAULT            "WIZ750SR-1xx" // Device name
-	#elif (DEVICE_BOARD_NAME == WIZ750SR_T1L)
-		//#define __USE_UART_IF_SELECTOR__	// RS-232/TTL or RS-422/485 selector using UART IF selector pin
-		//#define __USE_EXT_EEPROM__			// External EEPROM or Internal Data flash (DAT0/1)
-		#define __USE_BOOT_ENTRY__			// Application boot mode entry pin activated
-		//#define __USE_APPBACKUP_AREA__		// If this option activated, Application firmware area is consists of App (50kB) and App backup (50kB). If not, user's application can be 100kB size. (Does not use the backup area)
-		#define __USE_GPIO_HARDWARE_FLOWCONTROL__
-		#define __USE_USERS_GPIO__
-		//#define __USE_DSR_DTR_DEFAULT__
-        #define __USE_SAFE_SAVE__             // DevConfig Save verify function added
-        #define __USE_APPBOOT_TCP_SEARCH__
-        #define __USE_TCPCONNECT_STATUS_PIN__ // When this option is enabled, the STATUS pin acts as a pin to indicate the TCP connection status of socket. (WIZ750SR-1xx series only)
-		#define DEVICE_CLOCK_SELECT	         CLOCK_SOURCE_EXTERNAL
-		#define DEVICE_PLL_SOURCE_CLOCK      PLL_SOURCE_12MHz
-		#define DEVICE_TARGET_SYSTEM_CLOCK   SYSTEM_CLOCK_48MHz
-		#define DEVICE_ID_DEFAULT            "WIZ750SR-T1L" // Device name	
 	#elif (DEVICE_BOARD_NAME == W7500_S2E) // Chip product
 		//#define __USE_UART_IF_SELECTOR__	// RS-232/TTL or RS-422/485 selector using UART IF selector pin
 		#define __USE_BOOT_ENTRY__			// Application boot mode entry pin activated
@@ -140,7 +124,7 @@
 ////////////////////////////////
 // Pin definitions			  //
 ////////////////////////////////
-#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L) // ##20161031 WIZ750SR-1xx
+#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) // ##20161031 WIZ750SR-1xx
 
 	#define PHYLINK_IN_PIN				GPIO_Pin_0
 	#define PHYLINK_IN_PORT				GPIOA
@@ -238,7 +222,7 @@
 #endif
 
 #ifdef __USE_BOOT_ENTRY__
-	#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L) // ##20170215 WIZ750SR_1xx
+	#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) // ##20170215 WIZ750SR_1xx
 		#define BOOT_ENTRY_PIN			GPIO_Pin_8
 		#define BOOT_ENTRY_PORT			GPIOA
 		#define BOOT_ENTRY_PAD_AF		PAD_AF1
@@ -265,7 +249,7 @@
 
 	#define USER_IO_NO_ADC				0xff
 
-	#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L) // ##20170215 WIZ750SR_1xx
+	#if (DEVICE_BOARD_NAME == WIZ750SR_1xx) // ##20170215 WIZ750SR_1xx
 		// USER IO pins for WIZ750SR_1xx
 		#define USER_IO_A_PIN				GPIO_Pin_15
 		#define USER_IO_A_PORT				GPIOC
@@ -323,7 +307,7 @@
 	
 	#define LED3_GPIO_PAD_AF	PAD_AF1
 
-#elif (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L) // ##20161031 WIZ750SR-1xx
+#elif (DEVICE_BOARD_NAME == WIZ750SR_1xx) // ##20161031 WIZ750SR-1xx
 	
 	#define LED1_PIN			GPIO_Pin_8
 	#define LED1_GPIO_PORT		GPIOC
@@ -392,7 +376,7 @@
 	} Led_TypeDef;
 */
 #endif
-#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) ||(DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L))	
+#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) ||(DEVICE_BOARD_NAME == WIZ750SR_1xx))	
 	// LED
 	#define LEDn		3
 	typedef enum

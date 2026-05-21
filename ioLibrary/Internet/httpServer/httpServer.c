@@ -206,20 +206,7 @@ void httpServer_run(uint8_t seqnum)
 #endif
 					// Repeatedly send remaining data to client
 					send_http_response_body(s, 0, http_response, 0, 0);
-#if (DEVICE_BOARD_NAME == WIZ750SR_T1L)
-					gettime = get_httpServer_timecount();
-					// Check the TX socket buffer for End of HTTP response sends
-					while(getSn_TX_FSR(s) != (getSn_TXBUF_SIZE(s)*1024))
-					{
-						if((get_httpServer_timecount() - gettime) > 3)
-						{
-#ifdef _HTTPSERVER_DEBUG_
-							printf("> HTTPSocket[%d] : [State] STATE_HTTP_RES_INPROC: TX Buffer clear timeout\r\n", s);
-#endif
-							break;
-						}
-					}
-#endif
+
 					if(HTTPSock_Status[seqnum].file_len == 0) HTTPSock_Status[seqnum].sock_status = STATE_HTTP_RES_DONE;
 					break;
 

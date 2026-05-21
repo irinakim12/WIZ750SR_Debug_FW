@@ -66,8 +66,9 @@
 #include "gpioHandler.h"
 
 #include "index.h"
-#include "mb.h"
-#include "mbrtu.h"
+////For PHY LINK TEST
+#include "phy_monitor.h"
+//////
 // ## for debugging
 //#include "loopback.h"
 
@@ -88,6 +89,8 @@ typedef struct
 #define W7500x_SYSCTRL_BASE      (0x4001F000)
 #define SYSRESETREQ_Msk 0x1
 #define WDTRESETREQ_Msk 0x2
+
+#define _PHY_MONITOR_DEBUG_ 0x01
 
 /* Private function prototypes -----------------------------------------------*/
 static void W7500x_Init(void);
@@ -147,13 +150,14 @@ int main(void)
     
     /* W7500x MCU Initialization */
     W7500x_Init(); // includes UART2 initialize code for print out debugging messages
-	
-		/* W7500x WZTOE (Hardwired TCP/IP stack) Initialization */
+
+    /* W7500x WZTOE (Hardwired TCP/IP stack) Initialization */
     W7500x_WZTOE_Init();
-		
-		/* W7500x Board Initialization */
+    
+    /* W7500x Board Initialization */
     W7500x_Board_Init();
 
+	
 		rst_info = W7500x_SYSCON->RSTINFO;
 	
 		if((rst_info & WDTRESETREQ_Msk) != 0) //Reset request is caused by WDT
@@ -165,6 +169,16 @@ int main(void)
 		WDT_InitStructure.WDTControl_RstEn = WDTControl_RstEnable;
 		WDT_Init(&WDT_InitStructure);
 
+		
+				////////////////////////////////////////////////////////////////////////
+    ////For PHY LINK TEST
+    // 원하는 모드 선택: PHY_MODE_100F / PHY_MODE_10F / PHY_MODE_AUTO 등
+    #if defined(_PHY_MONITOR_DEBUG_)
+           phy_monitor_init(PHY_MODE_100H);
+    #endif
+	//	
+
+    /////////////////////////////////////////////////////////////////////	
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     // W7500x Application: Initialize
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,10 +197,7 @@ int main(void)
     
     /* UART Initialization */
     S2E_UART_Configuration();
-    if ((dev_config->network_info[0].working_mode == TCP_SERVER_MODE || dev_config->network_info[0].working_mode == UDP_MODE) && get_serial_communation_protocol() == MODBUS_RTU) {
-        eMBRTUInit(dev_config->serial_info[0].baud_rate);
-    }
-
+    
     if(dev_config->serial_info[0].serial_debug_en)
     {
         // Debug UART: Device information print out
@@ -229,8 +240,8 @@ int main(void)
     // Debug UART: Network information print out (includes DHCP IP allocation result)
     if(dev_config->serial_info[0].serial_debug_en)
     {
-        display_Net_Info();
-        display_Dev_Info_dhcp();
+      //  display_Net_Info();
+      //  display_Dev_Info_dhcp();
     }
     
     /* DNS client */
@@ -283,7 +294,9 @@ int main(void)
 				WDT_SetWDTLoad(0xFF0000);
 			
         do_segcp();
-				
+	#if defined(_PHY_MONITOR_DEBUG_)
+        phy_link_monitor(); 		
+    #endif
         Dev_Mode_Check(SOCK_DATA); // while DHCP operate, Device mode change(AT mode <-> GW mode) as possibility. This took it out in do_seg funcion.
         if(flag_process_ip_success)
             do_seg(SOCK_DATA);
@@ -543,7 +556,7 @@ void display_Dev_Info_header(void)
     printf("\r\n");
     printf("%s\r\n", STR_BAR);
     
-#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) || (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L))
+#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) || (DEVICE_BOARD_NAME == WIZ750SR_1xx))
     printf(" %s \r\n", DEVICE_ID_DEFAULT);
     printf(" >> WIZnet Serial to Ethernet Device\r\n");
 #else
@@ -620,7 +633,7 @@ void display_Dev_Info_main(void)
         printf("\t- %s\r\n", (dev_config->options.serial_command == 1)?STR_ENABLED:STR_DISABLED);
         printf("\t- [%.2X][%.2X][%.2X] (Hex only)\r\n", dev_config->options.serial_trigger[0], dev_config->options.serial_trigger[1], dev_config->options.serial_trigger[2]);
     
-#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) || (DEVICE_BOARD_NAME == WIZ750SR_1xx) || (DEVICE_BOARD_NAME == WIZ750SR_T1L))
+#if ((DEVICE_BOARD_NAME == WIZ750SR) || (DEVICE_BOARD_NAME == W7500P_S2E) || (DEVICE_BOARD_NAME == WIZ750SR_1xx))
     printf(" - Hardware information: Status pins\r\n");
         printf("\t- Status 1: [%s] - %s\r\n", "PA_10", dev_config->serial_info[0].dtr_en?"DTR":"PHY link");
         printf("\t- Status 2: [%s] - %s\r\n", "PA_01", dev_config->serial_info[0].dsr_en?"DSR":"TCP connection"); // shared pin; HW_TRIG (input) / TCP connection indicator (output)
@@ -696,15 +709,6 @@ void delay(__IO uint32_t milliseconds)
     while(TimingDelay != 0);
 }
 
-void mdio_delay(__IO uint32_t count) 
-{ 
-	volatile uint32_t i; 
-	
-	for (i = 0; i < count * 1600; i++) 
-	{ 
-		__asm volatile ("nop"); 
-	} 
-}
 
 /**
   * @brief  Decrements the TimingDelay variable.

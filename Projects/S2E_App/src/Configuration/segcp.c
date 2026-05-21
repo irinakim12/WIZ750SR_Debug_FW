@@ -19,7 +19,6 @@
 #include "uartHandler.h"
 #include "gpioHandler.h"
 #include "timerHandler.h"
-#include "mb.h"
 
 /* Private define ------------------------------------------------------------*/
 // Ring Buffer declaration
@@ -42,7 +41,7 @@ uint8_t * tbSEGCPCMD[] = {"MC", "VR", "MN", "IM", "OP", "DD", "CP", "PO", "DG", 
                           "LG", "ER", "FW", "MA", "PW", "SV", "EX", "RT", "UN", "ST",
                           "FR", "EC", "K!", "UE", "GA", "GB", "GC", "GD", "CA", "CB", 
                           "CC", "CD", "SC", "S0", "S1", "RX", "FS", "FC", "FP", "FD",
-                          "FH", "UI", "AB", "TR", "BU", "MB", 0};
+                          "FH", "UI", "AB", "TR", "BU", 0};
                             
 uint8_t * tbSEGCPERR[] = {"ERNULL", "ERNOTAVAIL", "ERNOPARAM", "ERIGNORED", "ERNOCOMMAND", "ERINVALIDPARAM", "ERNOPRIVILEGE"};
 
@@ -618,9 +617,6 @@ uint16_t proc_SEGCP(uint8_t* segcp_req, uint8_t* segcp_rep)
                         break;
                     case SEGCP_BU: ret |= SEGCP_RET_ERR_NOPARAM;
                         break;
-                    case SEGCP_MB:
-                        sprintf(trep,"%d", dev_config->modbus_enable);
-                        break;
                     default:
                         ret |= SEGCP_RET_ERR_NOCOMMAND;
                         sprintf(trep,"%s", strDEVSTATUS[dev_config->network_info[0].state]);
@@ -1135,15 +1131,6 @@ uint16_t proc_SEGCP(uint8_t* segcp_req, uint8_t* segcp_rep)
 #ifdef _SEGCP_DEBUG_
                             printf("SEGCP_BU:OK\r\n");
 #endif
-                        }
-                        break;
-
-                    case SEGCP_MB:
-                        tmp_int = atoi(param);
-                        if (param_len > 2 || tmp_int > MODBUS_ASCII) {
-                            ret |= SEGCP_RET_ERR_INVALIDPARAM;
-                        } else {
-                            dev_config->modbus_enable = tmp_int;
                         }
                         break;
                         
