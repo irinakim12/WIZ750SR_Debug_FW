@@ -46,8 +46,7 @@ void make_json_devinfo(uint8_t * buf, uint16_t * len)
                                                "\"databit\":\"%d\","\
                                                "\"parity\":\"%d\","\
                                                "\"stopbit\":\"%d\","\
-                                               "\"flow\":\"%d\","\
-                                               "\"modbus\":\"%d\""\
+                                               "\"flow\":\"%d\""\
                                                "});",
 		dev_config->fw_ver[0], dev_config->fw_ver[1], dev_config->fw_ver[2], STR_VERSION_STATUS,
 		dev_config->module_name,
@@ -67,8 +66,7 @@ void make_json_devinfo(uint8_t * buf, uint16_t * len)
 		databit_index[uart_sel],
 		dev_config->serial_info[uart_sel].parity,
 		stopbit_index[uart_sel],
-		dev_config->serial_info[uart_sel].flow_control,
-		dev_config->modbus_enable
+		dev_config->serial_info[uart_sel].flow_control
     );
 }
 
@@ -172,11 +170,6 @@ uint8_t set_devinfo(uint8_t * uri)
 	if((param = get_http_param_value((char *)uri, "flow", (char*)buf)))
 	{
     dev_config->serial_info[uart_sel].flow_control = ATOI(param, 10);
-		ret = 1;
-	}
-	if((param = get_http_param_value((char *)uri, "modbus", (char*)buf)))
-	{
-    dev_config->modbus_enable = ATOI(param, 10);
 		ret = 1;
 	}
 

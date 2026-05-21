@@ -75,7 +75,5 @@ void init_time_delimiter_timer(void); 			// Serial data packing option [Time]: T
 void clear_data_transfer_bytecount(teDATADIR dir);
 uint32_t get_data_transfer_bytecount(teDATADIR dir);
 
-uint8_t get_serial_communation_protocol(void);
-
 #endif /* SEG_H_ */
 

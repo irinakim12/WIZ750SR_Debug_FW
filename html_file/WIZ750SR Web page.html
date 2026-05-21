@@ -194,7 +194,6 @@
 	 $('txtLport').value=o.lport;
 	 $('txtRip').value=o.rip;
 	 $('txtRport').value=o.rport;
-	 $('txtModbus').value=o.modbus;
 	 if(typeof(window.external)!='undefined'){
 	 	obj=$$_ie('input','TCP Client');
 	 }else{
@@ -246,17 +245,10 @@
  	if(o == 1) { // Using Server mode, Ch0info Remote ip/port blocked
 		$('txtRip').disabled=true;
 		$('txtRport').disabled=true;
-		$('txtModbus').disabled=false;
 		server_enabled = 1;
  	} else {		// Static setting, Netinfo inputbox unblocked
 		$('txtRip').disabled=false;
 		$('txtRport').disabled=false;
-		if(o == 3) {
-			$('txtModbus').disabled=false;
-		}
-		else {
-			$('txtModbus').disabled=true;
-		}
 		server_enabled = 0;
  	}
  }
@@ -301,12 +293,10 @@
   	ch0_info_str = '&opmode=' + $('txtOpmode').value +
 		               '&lport=' + $('txtLport').value +
 	 	               '&rip=' + $('txtRip').value +
-	 	               '&rport=' + $('txtRport').value +
-	 	               '&modbus=' + $('txtModbus').value;
+	 	               '&rport=' + $('txtRport').value;
 	}else{
 		ch0_info_str = '&opmode=' + $('txtOpmode').value +
-		               '&lport=' + $('txtLport').value +
-	 	               '&modbus=' + $('txtModbus').value;
+		               '&lport=' + $('txtLport').value;
 	}
  	
  	uart0_info_str = '&baud=' + $('selBaud1').value +
@@ -370,13 +360,7 @@
 		  </div>
 		  <p><label for="txtLport">Local Port:</label><input id="txtLport" name="lport" type="text" size="20" value=""></p>
 			<p><label for="txtRip">Remote IP</label><input id="txtRip" name="rip" type="text" size="20" value=""></p>
-			<p><label for="txtRport">Remote Port</label><input id="txtRport" name="rport" type="text" size="20" value=""></p>
-			<p><label for="txtModbus">Modbus</label>
-				<select id="txtModbus" name="modbus">
-					<option value="0">NONE</option>
-					<option value="1">RTU</option>
-					<option value="2">ASCII</option>
-				</select></p>
+			<p><label for="txtRport">Remote Port</label><input id="txtRport" name="rpot" type="text" size="20" value=""></p>
 		</div><h3>Serial Port</h3>
 		<br>
 		<div>

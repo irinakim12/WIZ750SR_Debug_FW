@@ -215,9 +215,7 @@ __weak void DUALTIMER0_Handler(void)
   * @retval None
   */
 __weak void DUALTIMER1_Handler(void)
-{
-  xMBRTUTimerT35Expired();
-}
+{}
 
 
 /**
